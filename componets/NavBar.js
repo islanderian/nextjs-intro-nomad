@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 export default function NavBar() {
   const router = useRouter();
-  console.log(router);
   return (
     <nav>
       <Link href="/">
@@ -14,14 +13,11 @@ export default function NavBar() {
       </Link>
       {/* Styled JSX */}
       <style jsx>{`
-        nav {
-          background-color: tomato;
-        }
         a {
           text-decoration: none;
         }
         .active {
-          color: yellow;
+          color: tomato;
         }
       `}</style>
     </nav>
