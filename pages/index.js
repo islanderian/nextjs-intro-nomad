@@ -1,32 +1,11 @@
 import { useEffect, useState } from "react";
 import Seo from "../componets/Seo";
 
-export default function Home() {
-  const [movies, setMovies] = useState();
-  useEffect(() => {
-    (async () => {
-      const { results } = await (await fetch(`/api/movies`)).json();
-      setMovies(results);
-    })();
-
-    /*
-    // 위 코드와 동일!!
-    (async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
-      );
-      const json = await response.json();
-      const results = json.results;
-      console.log(results);
-      setMovies(results);
-    })();
-    */
-  }, []);
+export default function Home({ results }) {
   return (
     <div className="container">
       <Seo title="Home"></Seo>
-      {!movies && <h4>Loading...</h4>} {/* movies 배열이 비어 있을 때 */}
-      {movies?.map((movie) => (
+      {results?.map((movie) => (
         <div className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <h4>{movie.original_title}</h4>
@@ -55,4 +34,18 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+// Server side redering, function 이름 중요!! 그대로 써야함. getServerSideProps
+// 오직 백엔드 서버에서만 실행됨. API 키를 여기에 적어주어도 됨
+// 데이터를 받은 후 화면에 렌더링 함
+export async function getServerSideProps() {
+  const { results } = await (
+    await fetch(`http://localhost:3000//api/movies`)
+  ).json();
+  return {
+    props: {
+      results,
+    },
+  };
 }
