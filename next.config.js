@@ -19,6 +19,10 @@ module.exports = {
         source: "/api/movies", // 유저에게 표시되는 URL
         destination: `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`,
       },
+      {
+        source: "/api/movies/:id", // detail 페이지
+        destination: `https://api.themoviedb.org/3/movie/:id?api_key=${API_KEY}`,
+      },
     ];
   },
 };
